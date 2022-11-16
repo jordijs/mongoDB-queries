@@ -25,10 +25,13 @@ db.restaurants.find( { borough : "Bronx" } ).limit(5).skip(5);
 db.restaurants.find( { "grades.score" :{$gt:90} });
 
 //9. Escriu una consulta per trobar els restaurants que tenen un score més gran que 80 però menys que 100.
-db.restaurants.find( { $and: [ { "grades.score" :{$gt:90} }, { "grades.score" :{$lt:100} } ] });
+//CANVIAT
+db.restaurants.find({ "grades.score" : { $gt :  80, $lt : 100}});
 
 //10. Escriu una consulta per trobar els restaurants que estan situats en una longitud inferior a -95.754168.
-db.restaurants.find({ "address.coord" : {$elemMatch: {$lt:-95.754168}}});
+//CANVIAT
+//long=0, lat=1
+db.restaurants.find({ "address.coord.0" : {$lt:-95.754168}});
 
 //11. Escriu una consulta de MongoDB per a trobar els restaurants que no cuinen menjar 'American ' i tenen algun score superior a 70 i latitud inferior a -65.754168.
 db.restaurants.find( { $and: [ { "cuisine" : {$not: {"American"} }}, {"grades.score" :{$gt:70} }, {"address.coord" : {$elemMatch: {$lt:-65.754168} } } ] });
