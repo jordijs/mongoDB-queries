@@ -47,3 +47,6 @@ db.restaurants.find( {"name":{$regex : /ces^/} }, { "restaurant_id" : 1, "name" 
 
 //16. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que contenen 'Reg' en qualsevol lloc del seu nom.
 db.restaurants.find( {"name":{$regex : /Reg/} }, { "restaurant_id" : 1, "name" : 1, "borough" : 1, "cuisine" : 1 } );
+
+//17.Escriu una consulta per trobar els restaurants que pertanyen al Bronx i preparen plats Americans o xinesos.
+db.restaurants.find( {$and: [{"borough" : "Bronx"}, { $or: [ { "cuisine": "American " }, { "cuisine" : "Chinese" } ]  } ] } );
