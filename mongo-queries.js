@@ -25,19 +25,21 @@ db.restaurants.find( { borough : "Bronx" } ).limit(5).skip(5);
 db.restaurants.find( { "grades.score" :{$gt:90} });
 
 //9. Escriu una consulta per trobar els restaurants que tenen un score més gran que 80 però menys que 100.
-//CANVIAT
+//CORREGIT
 db.restaurants.find({ "grades.score" : { $gt :  80, $lt : 100}});
 
 //10. Escriu una consulta per trobar els restaurants que estan situats en una longitud inferior a -95.754168.
-//CANVIAT
+//CORREGIT
 //long=0, lat=1
 db.restaurants.find({ "address.coord.0" : {$lt:-95.754168}});
 
 //11. Escriu una consulta de MongoDB per a trobar els restaurants que no cuinen menjar 'American ' i tenen algun score superior a 70 i latitud inferior a -65.754168.
-db.restaurants.find( { $and: [ { "cuisine" : {$not: {"American"} }}, {"grades.score" :{$gt:70} }, {"address.coord" : {$elemMatch: {$lt:-65.754168} } } ] });
+//et demana només la latitud.
+db.restaurants.find({$and: [ {"cuisine" : {$ne: "American"}}, {"grades.score" :{$gt:70}}, {"address.coord.1" : {$lt:-65.754168}} ] });
 
 //12. Escriu una consulta per trobar els restaurants que no preparen menjar 'American' i tenen algun score superior a 70 i que, a més, es localitzen en longituds inferiors a -65.754168. Nota: Fes aquesta consulta sense utilitzar operador $and.
-db.restaurants.find( { [ { "cuisine" : {$not: {"American"} }}, {"grades.score" :{$gt:70} }, {"address.coord" : {$elemMatch: {$lt:-65.754168} } } ] });
+// et demana només la longitud.
+db.restaurants.aggregate( [ {$match:{"cuisine" : {$ne: "American"}}}, { $match: {"grades.score" : {$gt:70}  }}, {$match:{ "address.coord.0" : {$lt:-65.754168}}}] );
 
 //13. Escriu una consulta per trobar els restaurants que no preparen menjar 'American ', tenen alguna nota 'A' i no pertanyen a Brooklyn. S'ha de mostrar el document segons la cuisine en ordre descendent.
 db.restaurants.find( { [ { "cuisine" : {$not: {"American"} }}, {"grades.grade" : "A" }, {"borough": { $not: {"Brooklyn"}} }] }).sort(cuisine : -1);
