@@ -25,8 +25,8 @@ db.restaurants.find( { borough : "Bronx" } ).limit(5).skip(5);
 db.restaurants.find( { "grades.score" :{$gt:90} });
 
 //9. Escriu una consulta per trobar els restaurants que tenen un score més gran que 80 però menys que 100.
-//CORREGIT
-db.restaurants.find({ "grades.score" : { $gt :  80, $lt : 100}});
+//CORREGIT DE NOU
+db.restaurants.find( { $and: [ { "grades.score" :{$gt:80} }, { "grades.score" :{$lt:100} } ] });
 
 //10. Escriu una consulta per trobar els restaurants que estan situats en una longitud inferior a -95.754168.
 //CORREGIT
