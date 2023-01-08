@@ -55,3 +55,12 @@ db.restaurants.find( {"name":{$regex : /Reg/} }, { "restaurant_id" : 1, "name" :
 
 //17.Escriu una consulta per trobar els restaurants que pertanyen al Bronx i preparen plats Americans o xinesos.
 db.restaurants.find( {$and: [{"borough" : "Bronx"}, { $or: [ { "cuisine": "American " }, { "cuisine" : "Chinese" } ]  } ] } );
+
+//18.Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per aquells restaurants que pertanyen a Staten Island, Queens, Bronx o Brooklyn.
+db.restaurants.find( {$or: [ {"borough": "Staten Island" }, {"borough" : "Queens" }, {"borough" : "Bronx"}, {"borough" : "Brooklyn"} ]  }, { "restaurant_id" : 1, "name" : 1, "borough" : 1, "cuisine" : 1, } );
+
+//19. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que NO pertanyen a Staten Island, Queens, Bronx o Brooklyn.
+db.restaurants.find( {$and: [{"borough": { $ne: "Staten Island"}}, {"borough" : { $ne: "Queens" } }, {"borough" : { $ne: "Bronx"}}, {"borough" : { $ne:  "Brooklyn"} }]}, { "restaurant_id" : 1, "name" : 1, "borough" : 1, "cuisine" : 1, } );
+
+//20. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que aconsegueixin una nota menor que 10.
+db.restaurants.find( {"grades.score": { $lt: 10}}, { "restaurant_id" : 1, "name" : 1, "borough" : 1, "cuisine" : 1, } );
